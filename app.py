@@ -1,18 +1,17 @@
 import streamlit as st
-import requests
 
 st.title("Volleybuk – analizator meczów siatkówki")
-st.write("Poniżej znajdziesz ostatnie mecze z Volleyboxa:")
 
-url = "https://volleybox.net/api/matches"
-response = requests.get(url)
+st.write("Wprowadź nazwy dwóch drużyn, które chcesz porównać:")
 
-if response.status_code == 200:
-    matches = response.json()
-    for match in matches[:10]:  # pokazujemy tylko 10 pierwszych
-        home = match.get("home_team", {}).get("name", "Brak")
-        away = match.get("away_team", {}).get("name", "Brak")
-        result = match.get("result") or "Brak wyniku"
-        st.write(f"{home} vs {away} → {result}")
-else:
-    st.error("Nie udało się pobrać danych z Volleybox 😢")
+# 📥 Pola tekstowe na drużyny
+team_1 = st.text_input("Drużyna 1")
+team_2 = st.text_input("Drużyna 2")
+
+# 🚀 Przycisk
+if st.button("Analizuj"):
+    if team_1 and team_2:
+        st.success(f"Analizuję: {team_1} vs {team_2} 🔍")
+        # tu potem wrzucimy algorytm
+    else:
+        st.warning("Podaj obie drużyny, żeby rozpocząć analizę.")
